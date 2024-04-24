@@ -1,3 +1,3 @@
 # CITYRIDE
-authorised by akshit and shruti
+authorised by akshit and shrutii
 
