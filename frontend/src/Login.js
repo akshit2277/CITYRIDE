@@ -1,5 +1,6 @@
 import React ,{useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate } from 'react-router-dom';
+import api from './api';
 import validation from './LoginValidation';
 
 function Login() {
@@ -8,15 +9,36 @@ function Login() {
     password:''
   })
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  
   const handleInput=(event)=>{
     setValues(prev => ({...prev,[event.target.name]:[event.target.value]}))
 
   }
 
-  const handleSubmit=(event)=>{
+  const handleSubmit=async (event)=>{
     event.preventDefault();
     setErrors(validation(values));
-  }
+    if (Object.keys(errors).length === 0) {
+      try {
+        const response = await api.post('/login', {
+          email: values.email,
+          password: values.password
+        });
+
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+          navigate('/home');
+        } else {
+          setErrors({ general: 'Login failed. Please check your credentials and try again.' });
+        }
+      } catch (error) {
+        setErrors({ general: 'An error occurred. Please try again later.' });
+      }
+    }
+  };
+  
+
   return (
     <div className='flex justify-center items-center bg-primary h-screen'>
       <div className='bg-white p-3 rounded w'>
