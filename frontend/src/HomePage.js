@@ -48,7 +48,7 @@
 //   };
 
 //   return (
-//     <LoadScript googleMapsApiKey="AIzaSyAWQMXbbN4COEZJ7Gt-wzlXzOcgHIy2ExI" libraries={['places']}>
+//     <LoadScript googleMapsApiKey="your api key " libraries={['places']}>
 //       <div style={{ marginBottom: '20px' }}>
 //         <button onClick={handleLogout}>Logout</button>
 //         <Autocomplete
