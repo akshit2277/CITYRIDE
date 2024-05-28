@@ -1,7 +1,7 @@
 // src/AuthService.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/';
+const API_URL = 'http://localhost:3001/';
 
 const register = (username, password) => {
   return axios.post(API_URL + 'register', { username, password });
@@ -21,7 +21,8 @@ const logout = () => {
 };
 
 const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem('user'));
+  let token=localStorage.getItem('token');
+  return token;
 };
 
 export default {

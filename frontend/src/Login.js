@@ -1,7 +1,10 @@
 import React ,{useState} from 'react';
 import { Link , useNavigate } from 'react-router-dom';
-import api from './api';
+// import api from './api';
 import validation from './LoginValidation';
+import axios from 'axios';
+import loginbgUrl from "./carpool-vector.jpg";
+import './Login.css';
 
 function Login() {
   const [values,setValues]=useState({
@@ -21,12 +24,19 @@ function Login() {
     setErrors(validation(values));
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await api.post('/login', {
-          email: values.email,
-          password: values.password
+        const response = await axios.post('http://localhost:3001/users/login', JSON.stringify(values),
+        {
+         withCredentials:true,
+         headers :{
+           'Content-Type': 'application/json'
+         }
+    
+        
         });
+        console.log(response.data);
 
         if (response.data.token) {
+          
           localStorage.setItem('token', response.data.token);
           navigate('/home');
         } else {
@@ -40,8 +50,11 @@ function Login() {
   
 
   return (
-    <div className='flex justify-center items-center bg-primary h-screen'>
-      <div className='bg-white p-3 rounded w'>
+    <div className='flex justify-center items-center h-screen'>
+      <div>
+    <img src={loginbgUrl} /></div>
+    <div classname='login-content'>
+    <div className='bg-white p-3 rounded w'>
         <form action='' onSubmit={handleSubmit}>
           <div className='mb-3'>
             <label htmlFor="email">Email</label>
@@ -57,13 +70,16 @@ function Login() {
 
           </div>
 
-          <button type="submit" className='btn btn-success w-20'>Log In</button>
+          <button type="submit" className='btn btn-success w-100'>Log In</button>
           <p>You agree to our terms and policies</p>
           <Link  to="/Signup"className='btn btn-success border w-full'>Create Account</Link>
+         
         </form>
+      </div>
       </div>
     </div>
   );
 }
 
 export default Login;
+

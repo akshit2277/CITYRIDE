@@ -1,7 +1,12 @@
 import React, {useState} from 'react'
 import { Link , useNavigate} from "react-router-dom"
-import api from './api';
+// import api from './api';
 import validation from './signupValidation'
+import axios from 'axios';
+import signupbgUrl from "./carpool-vector.jpg";
+import './Signup.css';
+
+// import { json } from 'express';
 
 function Signup() {
   const [values,setValues]=useState({
@@ -21,10 +26,12 @@ function Signup() {
     setErrors(validation(values));
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await api.post('/signup', {
-          name: values.name,
-          email: values.email,
-          password: values.password
+        const response = await axios.post('http://localhost:3001/users/Signup', JSON.stringify(values),
+         {
+          withCredentials:true,
+          headers :{
+            'Content-Type': 'application/json'
+          }
         });
 
         if (response.data.token) {
@@ -43,8 +50,11 @@ function Signup() {
 
 
   return (
-    <div className='flex justify-center items-center bg-primary h-screen'>
+    <div className='flex justify-center items-center h-screen'>
+     <div>
+    <img src={signupbgUrl} /></div>
       <div className='bg-white p-3 rounded w'>
+      <div classname='login-content'>
       <h2>signup</h2>
         <form action='' onSubmit={handleSubmit}>
           <div className='mb-3'>
@@ -71,10 +81,11 @@ function Signup() {
              {errors.password &&  <span   className='text-danger'>{errors.password}</span>}
           </div>
 
-          <button type  ='submit' className='btn btn-success w-20'>Sign up</button>
+          <button type  ='submit' className='btn btn-success w-100'>Sign up</button>
           <p>You agree to our terms and policies</p>
           <Link  to="/" className='btn btn-success border w-full'>Login</Link>
         </form>
+      </div>
       </div>
     </div>
    
