@@ -6,6 +6,8 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Signup from './Signup';
 import HomePage from './HomePage';
 import AuthService from './AuthService';
+// import PaymentPage from './PaymentPage';
+
 
 
 
