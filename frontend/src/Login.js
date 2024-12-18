@@ -15,11 +15,15 @@ function Login() {
   const navigate = useNavigate();
   
   const handleInput=(event)=>{
-    setValues(prev => ({...prev,[event.target.name]:[event.target.value]}))
+
+  
+    setValues(prev => ({...prev,[event.target.name]:event.target.value}))
 
   }
 
   const handleSubmit=async (event)=>{
+    console.log(values);
+    
     event.preventDefault();
     setErrors(validation(values));
     if (Object.keys(errors).length === 0) {
@@ -53,7 +57,7 @@ function Login() {
     <div className='flex justify-center items-center h-screen'>
       <div>
     <img src={loginbgUrl} /></div>
-    <div classname='login-content'>
+    <div className='login-content'>
     <div className='bg-white p-3 rounded w'>
         <form action='' onSubmit={handleSubmit}>
           <div className='mb-3'>

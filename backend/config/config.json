@@ -1,23 +1,18 @@
 {
   "development": {
-    "username": "root",
-    "password": "animelover",
-    "database": "cityride",
     "host": "localhost",
-    "dialect": "mysql"
+    "port": 27017,
+    "database": "cityride",
+    "use_env_variable": false
   },
   "test": {
-    "username": "root",
-    "password": "animelover",
-    "database": "cityride",
     "host": "localhost",
-    "dialect": "mysql"
+    "port": 27017,
+    "database": "cityride_test",
+    "use_env_variable": false
   },
   "production": {
-    "username": "root",
-    "password": "animelover",
-    "database": "cityride",
-    "host": "localhost",
-    "dialect": "mysql"
+    "use_env_variable": "MONGODB_URI"
   }
 }
+

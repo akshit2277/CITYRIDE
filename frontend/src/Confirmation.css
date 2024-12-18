@@ -1,0 +1,66 @@
+
+
+/* Confirmation Page Styles */
+.confirmation-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(145deg, #eef2f3, #d4dfe5);
+    font-family: "Arial", sans-serif;
+    color: #333;
+  }
+  
+  .confirmation-page h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .confirmation-card {
+    background: #fff;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2), -10px -10px 20px rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    padding: 30px;
+    width: 80%;
+    max-width: 600px;
+    text-align: left;
+    transform: perspective(1000px) rotateX(3deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .confirmation-card:hover {
+    transform: perspective(1000px) rotateX(0deg);
+    box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.2), -20px -20px 40px rgba(255, 255, 255, 0.8);
+  }
+  
+  .confirmation-card p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 10px;
+  }
+  
+  .confirm-button {
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(145deg, #4caf50, #45a049);
+    border: none;
+    border-radius: 50px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .confirm-button:hover {
+    transform: scale(1.1);
+    box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.4), -7px -7px 20px rgba(255, 255, 255, 0.4);
+  }
+  
+  .confirm-button:active {
+    transform: scale(0.9);
+  }
+  

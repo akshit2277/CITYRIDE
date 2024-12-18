@@ -18,10 +18,12 @@ function Signup() {
   const navigate = useNavigate();
 
   const handleInput=(event)=>{
-    setValues(prev => ({...prev,[event.target.name]:[event.target.value]}))
+    setValues(prev => ({...prev,[event.target.name]:event.target.value}))
   };
 
   const handleSubmit=async (event)=>{
+    console.log(values);
+    
     event.preventDefault();
     setErrors(validation(values));
     if (Object.keys(errors).length === 0) {
@@ -54,7 +56,7 @@ function Signup() {
      <div>
     <img src={signupbgUrl} /></div>
       <div className='bg-white p-3 rounded w'>
-      <div classname='login-content'>
+      <div className='login-content'>
       <h2>signup</h2>
         <form action='' onSubmit={handleSubmit}>
           <div className='mb-3'>

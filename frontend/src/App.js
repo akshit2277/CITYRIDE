@@ -6,7 +6,11 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import Signup from './Signup';
 import HomePage from './HomePage';
 import AuthService from './AuthService';
-// import PaymentPage from './PaymentPage';
+import Publish from './Publish';
+import Confirmation from './Confirmation';
+import Availablerides from './Availablerides';
+import PublishRides from './PublishRides'
+import BookedRides from './BookedRides';
 
 
 
@@ -17,9 +21,16 @@ function App() {
   return (
     <BrowserRouter>
        <Routes>
-        <Route path='/' element={<Login />}></Route>
+        <Route path='/' element={<HomePage />}></Route>
+       <Route path='/Login' element={<Login />}></Route>
         <Route path='/signup' element={<Signup />}></Route>
         <Route path="/home" element={ currentUser ?<HomePage /> :<Login/>} ></Route>
+        <Route path="/availablerides" element={<Availablerides />}></Route>
+        <Route path='/Publish' element={<Publish />}></Route>
+        <Route path='/Confirmation' element={<Confirmation />}></Route>
+        <Route path='/view-published-rides' element={<PublishRides />}></Route>
+        <Route path='/view-booked-rides' element={<BookedRides />}></Route>
+
 
 
        </Routes>

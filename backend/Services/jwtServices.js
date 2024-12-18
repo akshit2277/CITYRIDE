@@ -14,19 +14,22 @@ const verifyToken = (req, res, next) => {
     try {
         // Extract the token from the Authorization header
         const authHeader = req.headers.authorization;
+        //console.log(authHeader);
         
         if (!authHeader || !authHeader.startsWith('Bearer')) {
             return res.status(401).json({ error: 'Missing or invalid Authorization header' });
         }
         let token = authHeader.split(' ')[1]; // Extracting token after 'Bearer' prefix
+        //console.log("after replacing slpit"+ token);
         token = token.replace(/"/g, '');
+        //console.log("after replacing Qouotes "+ token);
         // Verify the token using the secret key
         const decoded = jwt.verify(token, secretKey); // Replace 'your_secret_key' with your actual secret key
         console.log(decoded);
 
         // Attach the user ID and email to the request object for further processing
         req.user = decoded.user;
-        console.log("User details:", req.user);
+        //console.log("User details:", req.user);
         
         // Continue to the next middleware
         next();

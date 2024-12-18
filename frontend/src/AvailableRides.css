@@ -1,0 +1,69 @@
+.available-rides {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #a5dee7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  .ride-card {
+    background: white;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .ride-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .ride-card h3 {
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 1.5rem;
+  }
+  
+  .ride-card p {
+    margin: 8px 0;
+    color: #666;
+  }
+  
+  .ride-card strong {
+    color: #333;
+  }
+  
+  .book-ride-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #00b7ff;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .book-ride-button:hover {
+    background-color: #0056b3;
+  }
+  
+  div {
+    text-align: center;
+    font-size: 1rem;
+    color: #888;
+  }
+  

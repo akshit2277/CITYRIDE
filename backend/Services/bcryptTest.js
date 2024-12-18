@@ -10,7 +10,10 @@ async function hashPass(pass){
     return hash;
 }
 async function comparePass(pass,hash){
+    console.log(pass,hash,"ggggg");
+
     let ans = await bcrypt.compare(pass,hash);
+    
     return ans;
 }
 

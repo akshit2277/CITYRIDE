@@ -1,5 +1,3 @@
-
-
 import React, { useState, useRef } from "react";
 import {
   GoogleMap,
@@ -24,6 +22,13 @@ const HomePage = () => {
   const [distance, setDistance] = useState("");
   const [duration, setDuration] = useState("");
   const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [date, setDate] = useState("");
+  const [passengerCount, setPassengerCount] = useState(1);
+  const [rides, setRides] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [showViewRidesDropdown, setShowViewRidesDropdown] = useState(false);
   const mapRef = useRef(null);
 
   const handlePickupPlaceChanged = () => {
@@ -111,85 +116,100 @@ const HomePage = () => {
   const saveLocation = async (distance, duration) => {
     // console.log(req.user);
     const userId = AuthService.getCurrentUser().id;
-    // Assuming you have a method to get the current user's ID
     console.log(userId);
-    try{
-    axios
-      .post(
-        "http://localhost:3001/users/save-location",
-        {
-          pickupAddress: pickup,
+    try {
+      axios
+        .post(
+          "http://localhost:3001/users/save-location",
+          {
+            pickupAddress: pickup,
 
-          dropoffAddress: dropoff,
-          distance,
-          duration,
-        },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
+            dropoffAddress: dropoff,
+            distance,
+            duration,
           },
-        }
-      )
-
-      .then((response) => {
-        console.log("Location saved successfully:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error saving location:", error);
-      });
-      
-    }
-    catch(err){
-      console.log("ni ara");
-      }
-  };
-
-  const bookRide = () => {
-    if (pickupLocation && dropoffLocation) {
-      const service = new window.google.maps.DistanceMatrixService();
-      service.getDistanceMatrix(
-        {
-          origins: [pickupLocation],
-          destinations: [dropoffLocation],
-          travelMode: window.google.maps.TravelMode.DRIVING,
-        },
-        (response, status) => {
-          if (status === "OK") {
-            const result = response.rows[0].elements[0];
-            if (result.status === "OK") {
-              setDistance(result.distance.text);
-              setDuration(result.duration.text);
-              saveLocation(result.distance.text, result.duration.text); // Save the location after getting distance and duration
-            } else {
-              console.log(
-                "Error calculating distance and duration:",
-                result.status
-              );
-            }
-          } else {
-            console.log("Error with Distance Matrix service:", status);
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-        }
-      );
+        )
+
+        .then((response) => {
+          console.log("Location saved successfully:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error saving location:", error);
+        });
+    } catch (err) {
+      console.log("ni ara");
     }
   };
 
-  const handleLogout = () => {
-    AuthService.logout();
-    navigate("/");
+  // const handleLogout = () => {
+  //   AuthService.logout();
+  //   navigate("/");
+  // };
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
+    console.log(!showDropdown);
+  };
+
+  const toggleViewRidesDropdown = () => {
+    setShowViewRidesDropdown((prev) => !prev);
   };
 
   return (
     <LoadScript
-      googleMapsApiKey="AIzaSyCYm6Onsmi7RvpUBe_zf50oE1Qtry7tMDc"
+      googleMapsApiKey="AIzaSyCPp8B2BvzMgsUsdCJ8ck0UUBa3DIe8oR8"
       libraries={["places"]}
     >
       <div className="home-page">
-        <button className="logout-button" onClick={handleLogout}>
+        {/* Navbar Section */}
+        <nav className="navbarSection ">
+          <div className="navbar-values">RideShare</div>
+          <button
+            className="publish-buttn"
+            onClick={() => navigate("/Publish")}
+          >
+            Publish
+          </button>
+          <div className="view-rides">
+            <div
+              className="view-rides-button"
+              onClick={toggleViewRidesDropdown}
+            >
+              View Rides
+            </div>
+            {showViewRidesDropdown && (
+              <div className="dropdown-list">
+                <button onClick={() => navigate("/view-booked-rides")}>
+                  View Booked Rides
+                </button>
+                <button onClick={() => navigate("/view-published-rides")}>
+                  View Published Rides
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="profile">
+            <div className="profile-buttn" onClick={toggleDropdown}>
+              <i className="fas fa-user-circle"></i>
+            </div>
+            {showDropdown && (
+              <div className="dropdown-list">
+                <button onClick={() => navigate("/login")}>Login</button>
+                <button onClick={() => navigate("/signup")}>Signup</button>
+              </div>
+            )}
+          </div>
+        </nav>
+        {/* <button className="logout-button" onClick={handleLogout}>
           Logout
-        </button>
-        <div className="input-container">
+        </button> */}
+
+        <div className="input">
           <Autocomplete
             onLoad={(autocomplete) => setPickupAutocomplete(autocomplete)}
             onPlaceChanged={handlePickupPlaceChanged}
@@ -212,16 +232,50 @@ const HomePage = () => {
               onChange={(e) => setDropoff(e.target.value)}
             />
           </Autocomplete>
-        </div>
-        <button
-          onClick={calculateDistanceAndDuration}
-          className="calculate-button"
-        >
-          Search
-        </button>
-        <button onClick={bookRide} className="book-ride-button">
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="date-input"
+          />
+          <input
+            type="number"
+            min="1"
+            max="10"
+            value={passengerCount}
+            onChange={(e) => setPassengerCount(e.target.value)}
+            placeholder="Passengers"
+            className="passenger-input"
+          />
+          <button
+            onClick={calculateDistanceAndDuration}
+            className="calculate-button"
+          >
+            Calculate Distance
+          </button>
+
+          {distance && duration && (
+            <div className="distance-info">
+              <strong>Distance:</strong> {distance} <br />
+              <strong>Duration:</strong> {duration}
+            </div>
+          )}
+
+          <button
+            onClick={() =>
+              navigate(
+                `/availablerides?pickup=${pickup}&dropoff=${dropoff}&date=${date}`
+              )
+            }
+            className="calculate-button"
+          >
+            Search Rides
+          </button>
+          {/* <button onClick={bookRide} className="book-ride-button">
           Book Ride
-        </button>
+        </button> */}
+        </div>
+
         <GoogleMap
           mapContainerClassName="map-container"
           center={{ lat: -3.745, lng: -38.523 }}
