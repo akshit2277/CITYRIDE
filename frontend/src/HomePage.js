@@ -162,7 +162,7 @@ const HomePage = () => {
 
   return (
     <LoadScript
-      googleMapsApiKey="AIzaSyCPp8B2BvzMgsUsdCJ8ck0UUBa3DIe8oR8"
+      googleMapsApiKey=""
       libraries={["places"]}
     >
       <div className="home-page">
